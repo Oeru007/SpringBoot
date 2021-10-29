@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User details</title>
+</head>
+<body>
+<div th:object="${user}">
+    <p>Your first name: <span th:text="*{firstName}">First name</span></p>
+    <p>Your last name: <span th:text="*{lastName}">First name</span></p>
+    <p>Your username: <span th:text="*{username}">First name</span></p>
+    <p>Your cryptopassword: <span th:text="*{password}">First name</span></p>
+    <p>Your roles: <p th:each="role : *{roles}"><span th:text="${role.getName()}">Role</span></p>
+</div>
+<div th:each="role : ${user.roles}" th:if="${role.getName().equals('ROLE_ADMIN')}">
+    <form method="get" action="/admin">
+        <input type="submit" value="Admin panel" />
+    </form>
+</div>
+<br/>
+<div th:insert="~{logoutfragment :: logout}"></div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All users page</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>E-mail</th>
+        <th>User actions</th>
+        </thead>
+        <tbody>
+        <tr th:if="${users.isEmpty()}">
+            <td colspan="3">No Users in database</td>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td><span th:text="${user.getFirstName()}">First name</span></td>
+            <td><span th:text="${user.getLastName()}">LastName</span></td>
+            <td><span th:text="${user.getEmail()}">E-mail</span></td>
+            <td>
+                <form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="edit" />
+                </form>
+                <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+                    <input type="submit" value="delete" />
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <form method="get" action="/admin/new">
+        <input type="submit" value="Add new user">
+    </form>
+</div>
+<div>
+    <form method="get" action="/userdetails">
+        <input type="submit" value="My user details">
+    </form>
+</div>
+<br/>
+<div th:insert="~{logoutfragment :: logout}"></div>
+</body>
+</html>
