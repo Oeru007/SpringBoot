@@ -1,4 +1,4 @@
-package ru.oeru.SpringBoot.configurations.utils;
+package ru.oeru.SpringBoot.utils;
 
 import org.springframework.ui.Model;
 import ru.oeru.SpringBoot.model.User;

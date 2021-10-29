@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.oeru.SpringBoot.configurations.utils.UserUtils;
+import ru.oeru.SpringBoot.utils.UserUtils;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
 
