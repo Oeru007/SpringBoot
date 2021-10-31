@@ -2,11 +2,9 @@ package ru.oeru.SpringBoot.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.oeru.SpringBoot.model.Role;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +24,9 @@ public class User implements UserDetails {
 
     @Column(name = "username")
     private String username;
+
+    @Column
+    private Integer age;
 
     @Column
     private String password;
@@ -155,6 +156,14 @@ public class User implements UserDetails {
         this.confirm = confirm;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public String getUserEmailWithRoles() {
         List<Role> list = new ArrayList<>(roles);
         StringBuilder emailWithRoles = new StringBuilder(getEmail() + " with roles: ");
@@ -163,6 +172,17 @@ public class User implements UserDetails {
             emailWithRoles.append(" ");
         }
         return emailWithRoles.toString();
+    }
+
+    public String getRolesString() {
+        List<Role> list = new ArrayList<>(roles);
+        StringBuilder roles = new StringBuilder();
+        for (Role role : list){
+            roles.append(role.getName().replace("ROLE_",""));
+            roles.append(" ");
+        }
+        roles.deleteCharAt(roles.lastIndexOf(" "));
+        return roles.toString();
     }
 
     @Override

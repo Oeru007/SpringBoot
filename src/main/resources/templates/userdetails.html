@@ -8,21 +8,47 @@
           crossorigin="anonymous">
 </head>
 <body>
-<div th:insert="logoutnav:: navbar (${user.getUserEmailWithRoles()})"></div>
-<div th:object="${user}">
-    <p>Your first name: <span th:text="*{firstName}">First name</span></p>
-    <p>Your last name: <span th:text="*{lastName}">First name</span></p>
-    <p>Your username: <span th:text="*{username}">First name</span></p>
-    <p>Your cryptopassword: <span th:text="*{password}">First name</span></p>
-    <p>Your roles: <p th:each="role : *{roles}"><span th:text="${role.getName()}">Role</span></p>
+<header>
+    <div th:insert="logoutnav:: navbar (${user.getUserEmailWithRoles()})"></div>
+</header>
+<div class="container-fluid" th:object="${user}" style="height: 100vh">
+    <div class="row h-100">
+        <div class="col-1 p-0">
+            <div th:each="role : ${user.roles}">
+                <form class="w-100"  th:action="@{/admin}" th:method="get" th:if="${role.getName().equals('ROLE_ADMIN')}">
+                    <button class="btn form-control text-start" style="color: #007bff" type="submit">Admin</button>
+                </form>
+            </div>
+            <form class="w-100"  th:action="@{/userdetails}" th:method="get">
+                <button class="btn btn-primary form-control text-start" type="submit">User</button>
+            </form>
+        </div>
+        <div class="col-11" style="background: #f8f9fa">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Age</td>
+                        <td>E-mail</td>
+                        <td>Role</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span th:text="*{id}">ID</span></td>
+                        <td><span th:text="*{firstName}">First Name</span></td>
+                        <td><span th:text="*{lastName}">Last Name</span></td>
+                        <td><span th:text="*{age}">Age</span></td>
+                        <td><span th:text="*{email}">E-mail</span></td>
+                        <td><span th:text="${user.getRolesString()}">Role</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div th:each="role : ${user.roles}" th:if="${role.getName().equals('ROLE_ADMIN')}">
-    <form method="get" action="/admin">
-        <input type="submit" value="Admin panel" />
-    </form>
-</div>
-<br/>
-<div th:insert="~{logoutfragment :: logout}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous">

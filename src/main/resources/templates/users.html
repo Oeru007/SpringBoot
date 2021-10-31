@@ -13,10 +13,12 @@
 <div>
     <table>
         <thead>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>E-mail</th>
-        <th>User actions</th>
+        <tr>
+            <td>First name</td>
+            <td>Last name</td>
+            <td>E-mail</td>
+            <td>User actions</td>
+        </tr>
         </thead>
         <tbody>
         <tr th:if="${users.isEmpty()}">
