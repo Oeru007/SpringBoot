@@ -5,10 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.oeru.SpringBoot.model.Role;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -155,6 +153,16 @@ public class User implements UserDetails {
 
     public void setConfirm(String confirm) {
         this.confirm = confirm;
+    }
+
+    public String getUserEmailWithRoles() {
+        List<Role> list = new ArrayList<>(roles);
+        StringBuilder emailWithRoles = new StringBuilder(getEmail() + " with roles: ");
+        for (Role role : list){
+            emailWithRoles.append(role.getName().replace("ROLE_",""));
+            emailWithRoles.append(" ");
+        }
+        return emailWithRoles.toString();
     }
 
     @Override

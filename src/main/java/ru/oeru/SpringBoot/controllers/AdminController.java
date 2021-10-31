@@ -9,6 +9,7 @@ import ru.oeru.SpringBoot.model.PossibleRoles;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,9 +23,11 @@ public class AdminController {
     }
 
     @GetMapping
-    public String usersPage(Model model){
+    public String usersPage(Model model, Principal principal){
         List<User> users = userService.listUsers();
+        User user = userService.findUserByUsername(principal.getName());
         model.addAttribute("users", users);
+        model.addAttribute("user", user);
         return "users";
     }
     @PostMapping

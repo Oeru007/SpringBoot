@@ -11,6 +11,8 @@ import ru.oeru.SpringBoot.utils.UserUtils;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
 
@@ -46,9 +48,8 @@ public class UserController {
     }
 
     @GetMapping("/userdetails")
-    public String userdetailsPage(Model model){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute(userService.findUserByUsername(username));
+    public String userdetailsPage(Model model, Principal principal){
+        model.addAttribute(userService.findUserByUsername(principal.getName()));
         return "userdetails";
     }
 
