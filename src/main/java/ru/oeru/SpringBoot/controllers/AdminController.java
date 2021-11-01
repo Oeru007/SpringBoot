@@ -28,10 +28,11 @@ public class AdminController {
         User user = userService.findUserByUsername(principal.getName());
         model.addAttribute("users", users);
         model.addAttribute("user", user);
+        model.addAttribute("newUser", new User());
         return "users";
     }
     @PostMapping
-    public String createUser(@ModelAttribute("user") User user, Model model){
+    public String createUser(@ModelAttribute("newUser") User user, Model model){
         UserUtils.formValidation(user, model);
         if (model.containsAttribute("formError")){
             return "new";

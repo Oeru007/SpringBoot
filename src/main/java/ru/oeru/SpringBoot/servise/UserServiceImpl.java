@@ -6,15 +6,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.oeru.SpringBoot.model.PossibleRoles;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.repositories.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private RoleService roleService;
     private UserRepository userRepository;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
