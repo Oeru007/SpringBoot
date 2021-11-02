@@ -97,7 +97,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null){
             throw new UsernameNotFoundException("user не найден");
         }
-        user.getRoles().forEach(role -> System.out.println(role.getName()));
         return findUserByUsername(s);
     }
 }
