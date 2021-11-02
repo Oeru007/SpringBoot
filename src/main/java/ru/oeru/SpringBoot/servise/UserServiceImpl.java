@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         userFromDB.setFirstName(user.getFirstName());
         userFromDB.setLastName(user.getLastName());
+        userFromDB.setAge(user.getAge());
         userFromDB.setEmail(user.getEmail());
         userFromDB.setUsername(user.getUsername());
         userFromDB.setPassword(passwordEncoder.encode(user.getPassword()));

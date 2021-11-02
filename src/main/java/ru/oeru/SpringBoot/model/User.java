@@ -166,6 +166,7 @@ public class User implements UserDetails {
 
     public String getUserEmailWithRoles() {
         List<Role> list = new ArrayList<>(roles);
+        list.sort(Comparator.comparing(Role::getName));
         StringBuilder emailWithRoles = new StringBuilder(getEmail() + " with roles: ");
         for (Role role : list){
             emailWithRoles.append(role.getName().replace("ROLE_",""));
@@ -176,6 +177,7 @@ public class User implements UserDetails {
 
     public String getRolesString() {
         List<Role> list = new ArrayList<>(roles);
+        list.sort(Comparator.comparing(Role::getName));
         StringBuilder roles = new StringBuilder();
         for (Role role : list){
             roles.append(role.getName().replace("ROLE_",""));

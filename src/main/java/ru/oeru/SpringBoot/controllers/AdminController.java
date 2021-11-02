@@ -11,6 +11,7 @@ import ru.oeru.SpringBoot.servise.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,6 +27,7 @@ public class AdminController {
     public String usersPage(Model model, Principal principal){
         List<User> users = userService.listUsers();
         User user = userService.findUserByUsername(principal.getName());
+        users = users.stream().peek(user1 -> user1.setPassword("")).collect(Collectors.toList());
         model.addAttribute("users", users);
         model.addAttribute("user", user);
         model.addAttribute("newUser", new User());
@@ -61,7 +63,7 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id, Model model) {
+    public String updateUser(@ModelAttribute("userFromDB") User user, @PathVariable("id") Long id, Model model) {
         UserUtils.formValidation(user, model);
         user.setId(id);
         if (model.containsAttribute("formError")){
