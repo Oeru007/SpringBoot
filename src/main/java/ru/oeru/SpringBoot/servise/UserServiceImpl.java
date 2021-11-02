@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private RoleService roleService;
     private UserRepository userRepository;
