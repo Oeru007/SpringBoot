@@ -36,39 +36,14 @@ public class AdminController {
     @PostMapping
     public String createUser(@ModelAttribute("newUser") User user, Model model){
         UserUtils.formValidation(user, model);
-        if (model.containsAttribute("formError")){
-            return "redirect:/admin";
-        } else if (userService.add(user)){
-            return "redirect:/admin";
-        } else {
-            model.addAttribute("userIsExist", "This user already exists");
-            return "redirect:/admin";
-        }
+        userService.add(user);
+        return "redirect:/admin";
     }
-
-//    @GetMapping("/new")
-//    public String newUser(Model model){
-//        model.addAttribute("user", new User());
-//        return "new";
-//    }
-
-//    @GetMapping("/{id}/edit")
-//    public String editUser(@PathVariable("id") Long id, Model model){
-//        User user = userService.find(id);
-//        if (user.getRoles().stream().anyMatch(role -> PossibleRoles.getAdminRole().equals(role.getName()))){
-//            user.setConfirm("on");
-//        }
-//        model.addAttribute("user", user);
-//        return "edit";
-//    }
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("userFromDB") User user, @PathVariable("id") Long id, Model model) {
         UserUtils.formValidation(user, model);
         user.setId(id);
-        if (model.containsAttribute("formError")){
-            return "redirect:/admin";
-        }
         userService.update(user);
         return "redirect:/admin";
     }
