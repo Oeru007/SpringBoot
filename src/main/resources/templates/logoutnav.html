@@ -3,10 +3,10 @@
 <body>
 <nav th:fragment="navbar (user)" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <div class="container-fluid"  >
+        <div class="collapse navbar-collapse">
             <span class="navbar-brand mb-0 h1" th:text="${user}"></span>
         </div>
-        <div class="container navbar-collapse " id="navbarSupportedContent">
+        <div class="navbar-collapse align-items-end" style="text-align: right" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" style="color: darkgray" href="/logout">Logout</a>
