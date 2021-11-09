@@ -81,9 +81,9 @@
                                                 <td><span th:text="${userFromDB.getEmail()}">E-mail</span></td>
                                                 <td><span th:text="${userFromDB.getUsername()}"></span></td>
                                                 <td><span th:text="${userFromDB.getRolesString()}"></span></td>
-                                                <td>
+                                                <td id="edit">
                                                     <div>
-                                                        <button type="button" class="btn btn-secondary"
+                                                        <button th:id="${userFromDB.getId()}" type="button" class="btn btn-secondary"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#id"
                                                                 th:attrappend="data-bs-target=${userFromDB.getId()}">
@@ -408,8 +408,10 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>
