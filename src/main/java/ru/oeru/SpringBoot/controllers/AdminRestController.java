@@ -26,7 +26,9 @@ public class AdminRestController {
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long id) {
-        return userService.find(id);
+        User user = userService.find(id);
+        user.setPassword("");
+        return user;
     }
 
     @PostMapping()
@@ -38,7 +40,8 @@ public class AdminRestController {
     @PatchMapping("/{id}")
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         user.setId(id);
-        userService.update(user);
+        //userService.update(user);
+        System.out.println(user);
         return userService.find(id);
     }
 
