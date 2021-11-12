@@ -40,8 +40,7 @@ public class AdminRestController {
     @PatchMapping("/{id}")
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         user.setId(id);
-        //userService.update(user);
-        System.out.println(user);
+        userService.update(user);
         return userService.find(id);
     }
 
