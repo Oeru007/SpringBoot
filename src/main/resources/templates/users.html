@@ -70,38 +70,6 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-<!--                                            <tr th:if="${users.isEmpty()}">-->
-<!--                                                <td colspan="8">No Users in database</td>-->
-<!--                                            </tr>-->
-<!--                                            <tr th:each="userFromDB : ${users}" th:id="'tr'+${userFromDB.getId()}">-->
-<!--                                                <td><span th:text="${userFromDB.getId()}">ID</span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getFirstName()}">First name</span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getLastName()}">LastName</span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getAge()}">Age</span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getEmail()}">E-mail</span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getUsername()}"></span></td>-->
-<!--                                                <td><span th:text="${userFromDB.getRolesString()}"></span></td>-->
-<!--                                                <td id="edit">-->
-<!--                                                    <div>-->
-<!--                                                        <button th:id="${userFromDB.getId()}" type="button" class="btn btn-secondary"-->
-<!--                                                                data-bs-toggle="modal"-->
-<!--                                                                data-bs-target="#modalWin"-->
-<!--                                                                >-->
-<!--                                                            Edit-->
-<!--                                                        </button>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
-<!--                                                <td id="delete">-->
-<!--                                                    <div>-->
-<!--                                                        <button type="button" class="btn btn-danger"-->
-<!--                                                                data-bs-toggle="modal"-->
-<!--                                                                data-bs-target="#modalWin"-->
-<!--                                                                th:id="${userFromDB.getId()}">-->
-<!--                                                            Delete-->
-<!--                                                        </button>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
-<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -121,62 +89,62 @@
                                             <div class="row m-0" style="background: white">
                                                 <div class="col p-3">
                                                     <div class="container text-center">
-                                                        <form th:method="POST" th:action="@{/admin}" th:object="${newUser}"
+                                                        <form id="registForm" method="POST" th:action="@{/admin}" th:object="${newUser}"
                                                               style="max-width: 300px; margin: 0 auto;">
                                                             <div class="m-3">
                                                                 <div>
-                                                                    <label for="name"><b>First name</b></label>
+                                                                    <label for="firstNameReg"><b>First name</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="text" th:field="*{firstName}"
-                                                                               id="name"/>
+                                                                               id="firstNameReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="lastname"><b>Last name</b></label>
+                                                                    <label for="lastNameReg"><b>Last name</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="text" th:field="*{lastName}"
-                                                                               id="lastname"/>
+                                                                               id="lastNameReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="age"><b>Age</b></label>
+                                                                    <label for="ageReg"><b>Age</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="number" th:field="*{age}"
-                                                                               id="age"/>
+                                                                               id="ageReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="email"><b>E-mail</b></label>
+                                                                    <label for="emailReg"><b>E-mail</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="email" th:field="*{email}"
-                                                                               id="email"/>
+                                                                               id="emailReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="username"><b>Username</b></label>
+                                                                    <label for="usernameReg"><b>Username</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="text" th:field="*{username}"
-                                                                               id="username"/>
+                                                                               id="usernameReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="password"><b>Password</b></label>
+                                                                    <label for="passwordReg"><b>Password</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="password"
-                                                                               th:field="*{password}" id="password"/>
+                                                                               th:field="*{password}" id="passwordReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="passwordconfirm"><b>Password confirm</b></label>
+                                                                    <label for="passwordconfirmReg"><b>Password confirm</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="password"
-                                                                               th:field="*{passwordConfirm}" id="passwordconfirm"/>
+                                                                               th:field="*{passwordConfirm}" id="passwordconfirmReg"/>
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="roles"><b>Role</b></label>
+                                                                    <label for="rolesReg"><b>Role</b></label>
                                                                     <div>
-                                                                        <select th:field="*{confirm}" id="roles" size="2" class="form-control" multiple>
+                                                                        <select id="rolesReg" size="2" class="form-control" multiple>
                                                                             <option selected value="ADMIN">ADMIN</option>
                                                                             <option value="">USER</option>
                                                                         </select>

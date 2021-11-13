@@ -1,5 +1,6 @@
 package ru.oeru.SpringBoot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -183,7 +184,9 @@ public class User implements UserDetails {
             roles.append(role.getName().replace("ROLE_",""));
             roles.append(" ");
         }
-        roles.deleteCharAt(roles.lastIndexOf(" "));
+        if (roles.length() != 0) {
+            roles.deleteCharAt(roles.lastIndexOf(" "));
+        }
         return roles.toString();
     }
 

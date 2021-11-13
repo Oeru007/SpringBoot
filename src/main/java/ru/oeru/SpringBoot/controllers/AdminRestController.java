@@ -6,6 +6,7 @@ import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
 import ru.oeru.SpringBoot.utils.UserUtils;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController

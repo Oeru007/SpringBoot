@@ -1,5 +1,6 @@
 package ru.oeru.SpringBoot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Role implements GrantedAuthority {
 
     @Column
     private String name;
-
+    @JsonBackReference
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
