@@ -2,17 +2,13 @@ package ru.oeru.SpringBoot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
-import ru.oeru.SpringBoot.utils.UserUtils;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

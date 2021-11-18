@@ -43,10 +43,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordConfirm(passwordEncoder.encode(user.getPasswordConfirm()));
         roleService.createRoleIfNotExist(PossibleRoles.createUserRole());
         user.addRole(roleService.findByName(PossibleRoles.getUserRole()));
-        if (user.getConfirm() != null){
+        if (user.getConfirm() != null && !user.getConfirm().equals("")){
             roleService.createRoleIfNotExist(PossibleRoles.createAdminRole());
             user.addRole(roleService.findByName(PossibleRoles.getAdminRole()));
         }
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 userFromDB.getRoles().remove(PossibleRoles.createAdminRole());
 
             } else {
-                userFromDB.getRoles().add(PossibleRoles.createAdminRole());
+                userFromDB.getRoles().add(roleService.findByName(PossibleRoles.getAdminRole()));
             }
             userFromDB.setFirstName(user.getFirstName());
             userFromDB.setLastName(user.getLastName());

@@ -1,9 +1,7 @@
 package ru.oeru.SpringBoot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.oeru.SpringBoot.utils.FieldsValueMatch;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -11,25 +9,16 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-@FieldsValueMatch.List({
-        @FieldsValueMatch(
-                field = "password",
-                fieldMatch = "passwordConfirm",
-                message = "Passwords do not match!"
-        )
-})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
-    @NotBlank(message = "more than 3 characters")
     @Size(min = 3, message = "more than 3 characters")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotBlank(message = "more than 3 characters")
     @Size(min = 3, message = "more than 3 characters")
     private String lastName;
 
@@ -39,7 +28,6 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "username")
-    @NotBlank(message = "more than 3 characters")
     @Size(min = 3, message = "more than 3 characters")
     private String username;
 
@@ -49,7 +37,6 @@ public class User implements UserDetails {
     private Integer age;
 
     @Column
-    @NotBlank(message = "more than 3 characters")
     @Size(min = 3, message = "more than 3 characters")
     private String password;
 

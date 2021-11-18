@@ -19,45 +19,53 @@ $(() => {
                 }
             }
             $('#modalForm input:submit').off().on('click', btnIn => {
+                $('#modalForm div.validation').text('')
                 btnIn.preventDefault()
                 for (let key in user){
                     if(user.hasOwnProperty(key)) {
                         user[key] = input.filter(`#${key}`).val()
                     }
                 }
-                let selectVal = $('div#modalWin select').val()[0]
-                if (selectVal === '') {
+                let selectVal = $('div#modalWin select').val()
+                if (selectVal[0] === '') {
                     user['confirm'] = null
-                } else if (selectVal === 'ADMIN') {
-                    user['confirm'] = selectVal
+                } else if (selectVal[0] === 'ADMIN') {
+                    user['confirm'] = selectVal[0]
                 }
-                $.ajax({
-                    url: `/admin/rest/${user.id}`,
-                    contentType: "application/json; charset=utf-8",
-                    method: 'patch',
-                    dataType: 'json',
-                    data: JSON.stringify(user),
-                    success: function(data){
-                        $('.modal').modal('hide')
-                        refactorTable(data, 'edit')
-                        $.getJSON('/rest/authorized', userAut => {
-                            let navSpan = $('span.navbar-brand')
-                            if (user.hasOwnProperty('userEmailWithRoles') && navSpan.text() !== userAut.userEmailWithRoles) {
-                                navSpan.text(userAut.userEmailWithRoles)
-                            }
-                        })
-                    },
-                    error: jqXHR => {
-                        let divValid = $('#modalForm div.validation')
-                        divValid.text('')
-                        let error = jqXHR.responseJSON
-                        for (key in error) {
-                            if (error.hasOwnProperty(key)) {
-                                divValid.filter(`#${key}EditError`).text(`${error[key]}`)
+                if (selectVal.length !== 1) {
+                    $('#modalForm div#confirmEditError').text('Choose one role')
+                }
+                if ($('input#passwordConfirm').val() !== $('input#password').val()){
+                    $('#modalForm div#userEditError').text('Passwords do not match!')
+                } else if (selectVal.length === 1) {
+                    $.ajax({
+                        url: `/admin/rest/${user.id}`,
+                        contentType: "application/json; charset=utf-8",
+                        method: 'patch',
+                        dataType: 'json',
+                        data: JSON.stringify(user),
+                        success: function (data) {
+                            $('.modal').modal('hide')
+                            refactorTable(data, 'edit')
+                            $.getJSON('/rest/authorized', userAut => {
+                                let navSpan = $('span.navbar-brand')
+                                if (user.hasOwnProperty('userEmailWithRoles') && navSpan.text() !== userAut.userEmailWithRoles) {
+                                    navSpan.text(userAut.userEmailWithRoles)
+                                }
+                            })
+                        },
+                        error: jqXHR => {
+                            let divValid = $('#modalForm div.validation')
+                            divValid.not('#userEditError').not('#confirmEditError').text('')
+                            let error = jqXHR.responseJSON
+                            for (key in error) {
+                                if (error.hasOwnProperty(key)) {
+                                    divValid.filter(`#${key}EditError`).text(`${error[key]}`)
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
 
             })
         })
@@ -92,38 +100,49 @@ $(() => {
     })
     let registrationBtn = $(document).on('click', 'form#registForm input:submit', (btnReg) => {
         btnReg.preventDefault()
+        $('#registForm div.validation').text('')
         let newUser = {}
         $('#registForm').find ('input').each(function() {
             if ($(this).val() !== 'Add new user') {
-                newUser[this.name.replace('Reg', '')] = $(this).val()
+                newUser[this.id.replace('Reg', '')] = $(this).val()
             }
         })
-        let selectVal = $('#registForm select').val()[0]
-        if (selectVal === '') {
+        let selectVal = $('#registForm select').val()
+        if (selectVal[0] === '') {
             newUser['confirm'] = null
-        } else if (selectVal === 'ADMIN') {
-            newUser['confirm'] = selectVal
+        } else if (selectVal[0] === 'ADMIN') {
+            newUser['confirm'] = selectVal[0]
         }
-        $.ajax({
-            url: '/admin/rest',
-            method: 'post',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(newUser),
-            success: createdUser => {
-                $('#registForm div.validation').text('')
-                buildTable(createdUser)
-            },
-            error: jqXHR => {
-                let divValid = $('#registForm div.validation')
-                divValid.text('')
-                let error = jqXHR.responseJSON
-                for (key in error) {
-                    if (error.hasOwnProperty(key)) {
-                        divValid.filter(`#${key}RegError`).text(`${error[key]}`)
+        if (selectVal.length !== 1) {
+            $('#registForm div#confirmRegError').text('Choose one role')
+        }
+        if ($('input#passwordConfirmReg').val() !== $('input#passwordReg').val()){
+            $('#registForm div#userRegError').text('Passwords do not match!')
+        } else if (selectVal.length === 1) {
+
+            $.ajax({
+                url: '/admin/rest',
+                method: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(newUser),
+                success: createdUser => {
+                    $('#registForm div.validation').text('')
+                    $('#registForm').find ('input').not(':submit').val('')
+                    console.log('dfhsg')
+                    buildTable(createdUser)
+                },
+                error: jqXHR => {
+                    let divValid = $('#registForm div.validation')
+                    divValid.not('#userRegError').not('#confirmRegError').text('')
+                    let error = jqXHR.responseJSON
+                    for (key in error) {
+                        if (error.hasOwnProperty(key)) {
+                            divValid.filter(`#${key}RegError`).text(`${error[key]}`)
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     })
     let refactorTable = (user, action) => {
         if (action === 'del') {
