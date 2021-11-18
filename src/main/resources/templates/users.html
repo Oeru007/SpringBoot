@@ -98,6 +98,7 @@
                                                                         <input class="form-control" type="text" th:field="*{firstName}"
                                                                                id="firstNameReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="firstNameRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="lastNameReg"><b>Last name</b></label>
@@ -105,6 +106,7 @@
                                                                         <input class="form-control" type="text" th:field="*{lastName}"
                                                                                id="lastNameReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="lastNameRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="ageReg"><b>Age</b></label>
@@ -112,6 +114,7 @@
                                                                         <input class="form-control" type="number" th:field="*{age}"
                                                                                id="ageReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="ageRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="emailReg"><b>E-mail</b></label>
@@ -119,6 +122,7 @@
                                                                         <input class="form-control" type="email" th:field="*{email}"
                                                                                id="emailReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="emailRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="usernameReg"><b>Username</b></label>
@@ -126,6 +130,7 @@
                                                                         <input class="form-control" type="text" th:field="*{username}"
                                                                                id="usernameReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="usernameRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="passwordReg"><b>Password</b></label>
@@ -133,13 +138,15 @@
                                                                         <input class="form-control" type="password"
                                                                                th:field="*{password}" id="passwordReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="passwordRegError"></div>
                                                                 </div>
                                                                 <div>
-                                                                    <label for="passwordconfirmReg"><b>Password confirm</b></label>
+                                                                    <label for="passwordConfirmReg"><b>Password confirm</b></label>
                                                                     <div>
                                                                         <input class="form-control" type="password"
-                                                                               th:field="*{passwordConfirm}" id="passwordconfirmReg"/>
+                                                                               th:field="*{passwordConfirm}" id="passwordConfirmReg"/>
                                                                     </div>
+                                                                    <div class="validation" id="userRegError"></div>
                                                                 </div>
                                                                 <div>
                                                                     <label for="rolesReg"><b>Role</b></label>
@@ -186,7 +193,7 @@
                 <div class="modal-body">
                     <div class="container text-center">
                         <div>
-                            <label for="ID"><b>ID</b></label>
+                            <label for="id"><b>ID</b></label>
                             <div>
                                 <input type="text" th:name="id"
                                        id="id" disabled/>
@@ -199,6 +206,7 @@
                                        th:name="firstName"
                                        id="firstName"/>
                             </div>
+                            <div class="validation" id="firstNameEditError"></div>
                         </div>
                         <div>
                             <label for="lastname"><b>Last
@@ -208,6 +216,7 @@
                                        th:name="lastName"
                                        id="lastName"/>
                             </div>
+                            <div class="validation" id="lastNameEditError"></div>
                         </div>
                         <div>
                             <label for="age"><b>Age</b></label>
@@ -216,6 +225,7 @@
                                        th:name="age"
                                        id="age"/>
                             </div>
+                            <div class="validation" id="ageEditError"></div>
                         </div>
                         <div>
                             <label for="email"><b>E-mail</b></label>
@@ -224,6 +234,7 @@
                                        th:name="email"
                                        id="email"/>
                             </div>
+                            <div class="validation" id="emailEditError"></div>
                         </div>
                         <div>
                             <label for="username"><b>Username</b></label>
@@ -232,6 +243,7 @@
                                        th:name="username"
                                        id="username"/>
                             </div>
+                            <div class="validation" id="usernameEditError"></div>
                         </div>
                         <div>
                             <label for="password"><b>Password</b></label>
@@ -240,6 +252,7 @@
                                        th:name="password"
                                        id="password"/>
                             </div>
+                            <div class="validation" id="passwordEditError"></div>
                         </div>
                         <div>
                             <label for="passwordConfirm"><b>Password
@@ -249,6 +262,7 @@
                                        th:name="passwordConfirm"
                                        id="passwordConfirm"/>
                             </div>
+                            <div class="validation" id="userEditError"></div>
                         </div>
                         <div>
                             <label for="roles">Role</label>

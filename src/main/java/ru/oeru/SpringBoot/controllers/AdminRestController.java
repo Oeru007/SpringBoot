@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/rest")
@@ -35,9 +36,12 @@ public class AdminRestController {
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long id) {
-        User user = userService.find(id);
-        user.setPassword("");
-        return user;
+        Optional<User> userOpt = userService.find(id);
+        if (userOpt.isPresent()){
+            userOpt.get().setPassword("");
+            return userOpt.get();
+        }
+        return null;
     }
 
     @PostMapping()
@@ -47,10 +51,11 @@ public class AdminRestController {
     }
 
     @PatchMapping("/{id}")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+    public User updateUser(@PathVariable("id") Long id, @Valid @RequestBody User user) {
         user.setId(id);
         userService.update(user);
-        return userService.find(id);
+        Optional<User> userFromDbOpt = userService.find(id);
+        return userFromDbOpt.orElse(null);
     }
 
     @DeleteMapping("/{id}")
@@ -65,7 +70,12 @@ public class AdminRestController {
             MethodArgumentNotValidException ex) {
         Map<String, String> errorResponse = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldError = ((FieldError) error).getField();
+            String fieldError;
+            if (error instanceof FieldError){
+                fieldError = ((FieldError) error).getField();
+            } else {
+                fieldError = error.getObjectName();
+            }
             String errorMessage = error.getDefaultMessage();
             errorResponse.put(fieldError, errorMessage);
         });

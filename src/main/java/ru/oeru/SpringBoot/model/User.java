@@ -3,29 +3,34 @@ package ru.oeru.SpringBoot.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.oeru.SpringBoot.utils.FieldsValueMatch;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
 @Table(name = "users")
+@FieldsValueMatch.List({
+        @FieldsValueMatch(
+                field = "password",
+                fieldMatch = "passwordConfirm",
+                message = "Passwords do not match!"
+        )
+})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
-    @Size(min = 3, message = "First name must be more than 3 characters")
-    @NotBlank(message = "First name can not be blank")
+    @NotBlank(message = "more than 3 characters")
+    @Size(min = 3, message = "more than 3 characters")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotBlank(message = "Last name can not be blank")
-    @Size(min = 3, message = "Last name must be more than 3 characters")
+    @NotBlank(message = "more than 3 characters")
+    @Size(min = 3, message = "more than 3 characters")
     private String lastName;
 
     @Column(name = "email")
@@ -34,22 +39,21 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "username")
-    @NotBlank(message = "Username can not be blank")
-    @Size(min = 3, message = "Username must be more than 3 characters")
+    @NotBlank(message = "more than 3 characters")
+    @Size(min = 3, message = "more than 3 characters")
     private String username;
 
     @Column
-    @Min(value = 0, message = "Age is not valid")
+    @NotNull(message = "Age must be greater than zero")
+    @Positive(message = "Age must be greater than zero")
     private Integer age;
 
     @Column
-    @NotBlank(message = "Password can not be blank")
-    @Size(min = 3, message = "Password must be more than 3 characters")
+    @NotBlank(message = "more than 3 characters")
+    @Size(min = 3, message = "more than 3 characters")
     private String password;
 
     @Transient
-    @NotBlank(message = "Password confirm can not be blank")
-    @Size(min = 3, message = "Password confirm must be more than 3 characters")
     private String passwordConfirm;
 
     @Transient

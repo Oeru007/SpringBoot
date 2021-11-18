@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPasswordConfirm(passwordEncoder.encode(user.getPasswordConfirm()));
         roleService.createRoleIfNotExist(PossibleRoles.createUserRole());
         user.addRole(roleService.findByName(PossibleRoles.getUserRole()));
         if (user.getConfirm() != null){
@@ -60,35 +61,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void update(User user) {
-        User userFromDB = find(user.getId());
+        Optional<User> userFromDBOpt = find(user.getId());
+        if (userFromDBOpt.isPresent()){
+            User userFromDB = userFromDBOpt.get();
+            if (user.getConfirm() == null){
+                userFromDB.getRoles().remove(PossibleRoles.createAdminRole());
 
-        if (user.getConfirm() == null){
-            userFromDB.getRoles().remove(PossibleRoles.createAdminRole());
-
-        } else {
-            userFromDB.getRoles().add(PossibleRoles.createAdminRole());
+            } else {
+                userFromDB.getRoles().add(PossibleRoles.createAdminRole());
+            }
+            userFromDB.setFirstName(user.getFirstName());
+            userFromDB.setLastName(user.getLastName());
+            userFromDB.setAge(user.getAge());
+            userFromDB.setEmail(user.getEmail());
+            userFromDB.setUsername(user.getUsername());
+            userFromDB.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(userFromDB);
         }
-        userFromDB.setFirstName(user.getFirstName());
-        userFromDB.setLastName(user.getLastName());
-        userFromDB.setAge(user.getAge());
-        userFromDB.setEmail(user.getEmail());
-        userFromDB.setUsername(user.getUsername());
-        userFromDB.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(userFromDB);
     }
 
     @Override
-    public User find(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElse(null);
+    @Transactional(readOnly = true)
+    public Optional<User> find(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> listUsers() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null){
@@ -98,6 +103,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = findUserByUsername(s);
         if (user == null){

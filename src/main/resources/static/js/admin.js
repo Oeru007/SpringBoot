@@ -4,6 +4,7 @@ $(() => {
     })
 
     let editBtn = $(document).on('click', 'td#edit button', (btn) => {
+        $('#modalForm div.validation').text('')
         $('div#modalWin select').prop('disabled', false)
         $('div#modalWin option').prop('selected', false)
         let input = $('div#modalWin input')
@@ -45,6 +46,16 @@ $(() => {
                                 navSpan.text(userAut.userEmailWithRoles)
                             }
                         })
+                    },
+                    error: jqXHR => {
+                        let divValid = $('#modalForm div.validation')
+                        divValid.text('')
+                        let error = jqXHR.responseJSON
+                        for (key in error) {
+                            if (error.hasOwnProperty(key)) {
+                                divValid.filter(`#${key}EditError`).text(`${error[key]}`)
+                            }
+                        }
                     }
                 })
 
@@ -99,10 +110,18 @@ $(() => {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(newUser),
             success: createdUser => {
+                $('#registForm div.validation').text('')
                 buildTable(createdUser)
             },
             error: jqXHR => {
-                console.log(jqXHR)
+                let divValid = $('#registForm div.validation')
+                divValid.text('')
+                let error = jqXHR.responseJSON
+                for (key in error) {
+                    if (error.hasOwnProperty(key)) {
+                        divValid.filter(`#${key}RegError`).text(`${error[key]}`)
+                    }
+                }
             }
         })
     })
