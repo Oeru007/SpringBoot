@@ -100,6 +100,9 @@ $(() => {
             data: JSON.stringify(newUser),
             success: createdUser => {
                 buildTable(createdUser)
+            },
+            error: jqXHR => {
+                console.log(jqXHR)
             }
         })
     })

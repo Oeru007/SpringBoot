@@ -1,11 +1,16 @@
 package ru.oeru.SpringBoot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.oeru.SpringBoot.model.User;
 import ru.oeru.SpringBoot.servise.UserService;
 import ru.oeru.SpringBoot.utils.UserUtils;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -33,7 +38,7 @@ public class AdminRestController {
     }
 
     @PostMapping()
-    public User createUser(@RequestBody User user) {
+    public User createUser(@Valid @RequestBody User user) {
         userService.add(user);
         return userService.findUserByUsername(user.getUsername());
     }
@@ -49,5 +54,12 @@ public class AdminRestController {
     public Long deleteUser(@PathVariable("id") Long id) {
         userService.removeById(id);
         return id;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public List<ObjectError> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        return ex.getBindingResult().getAllErrors();
     }
 }

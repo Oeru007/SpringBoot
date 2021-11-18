@@ -5,6 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -15,24 +19,37 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 3, message = "First name must be more than 3 characters")
+    @NotBlank(message = "First name can not be blank")
     private String firstName;
 
     @Column(name = "last_name")
+    @NotBlank(message = "Last name can not be blank")
+    @Size(min = 3, message = "Last name must be more than 3 characters")
     private String lastName;
 
     @Column(name = "email")
+    @NotBlank(message = "Email can not be blank")
+    @Email(message = "Email is not valid")
     private String email;
 
     @Column(name = "username")
+    @NotBlank(message = "Username can not be blank")
+    @Size(min = 3, message = "Username must be more than 3 characters")
     private String username;
 
     @Column
+    @Min(value = 0, message = "Age is not valid")
     private Integer age;
 
     @Column
+    @NotBlank(message = "Password can not be blank")
+    @Size(min = 3, message = "Password must be more than 3 characters")
     private String password;
 
     @Transient
+    @NotBlank(message = "Password confirm can not be blank")
+    @Size(min = 3, message = "Password confirm must be more than 3 characters")
     private String passwordConfirm;
 
     @Transient
