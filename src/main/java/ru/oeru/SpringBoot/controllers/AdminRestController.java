@@ -3,6 +3,7 @@ package ru.oeru.SpringBoot.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,9 @@ import ru.oeru.SpringBoot.utils.UserUtils;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/rest")
@@ -58,8 +61,14 @@ public class AdminRestController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ObjectError> handleValidationExceptions(
+    public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
-        return ex.getBindingResult().getAllErrors();
+        Map<String, String> errorResponse = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldError = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errorResponse.put(fieldError, errorMessage);
+        });
+        return errorResponse;
     }
 }
