@@ -38,6 +38,9 @@ public class UserController {
     public String registrationUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             return "registration";
+        } else if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            model.addAttribute("matchPassword", "Passwords do not match");
+            return "registration";
         }
         if (userService.add(user)) {
             return "redirect:login";

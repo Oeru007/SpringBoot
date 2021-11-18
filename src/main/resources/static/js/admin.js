@@ -128,7 +128,6 @@ $(() => {
                 success: createdUser => {
                     $('#registForm div.validation').text('')
                     $('#registForm').find ('input').not(':submit').val('')
-                    console.log('dfhsg')
                     buildTable(createdUser)
                 },
                 error: jqXHR => {
